@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pourquoi la programmation fonctionnelle ?</title>
+        <meta name="description" content="Pourquoi la programmation fonctionnelle ?">
+        <meta name="author" content="Vivian Pennel">
+        <meta charset="UTF-8">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link href="../components/reveal.js/css/reveal.min.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="../components/reveal.js/css/theme/default.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="../components/reveal.js/lib/css/zenburn.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="../stylesheets/main.css" media="screen" rel="stylesheet" type="text/css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1>Programmation fonctionnelle</h1>
+
+                <h3>Qu'est-ce que c'est ?</h3>
+                <h4>Pourquoi en avons nous besoin ?</h4>
+                <p>
+                    <small>Par
+                        <a href="http://www.vivian-pennel.fr">Vivian Pennel</a> / <a href="http://twitter.com/vp3n">@vp3n</a><br>
+                        Lead Developer chez <a href="http://www.iocean.fr">IOcean</a>
+                    </small>
+                </p>
+            </section>
+
+            <section>
+                <section>
+                    <h1>I - Historique</h1>
+                    <h3>En quelques mots</h3>
+                </section>
+
+                <section>
+                    <ul>
+                        <li><small>1955 : Fortran -> Mainstream</small></li>
+                        <li><small>1958 : LISP</small></li>
+                        <li><small>1959 : COBOL -> Mainstream</small></li>
+                        <li><small><a href="http://en.wikipedia.org/wiki/Go_To_Statement_Considered_Harmful">
+                            1968 - Go To Statement Considered Harmful - Edsger Dijkstra
+                        </a></small></li>
+                        <li><small>1972 : C -> Mainstream</small></li>
+                        <li><small>1972 : Smalltalk</small></li>
+                        <li><small>1975 : Scheme</small></li>
+                        <li><small>1980 : C++ -> Mainstream</small></li>
+                        <li><small>1984 : Common Lisp</small></li>
+                        <li><small>1986 : Erlang</small></li>
+                        <li><small>1990 : Haskell</small></li>
+                        <li><small>1991 : Python -> Mainstream</small></li>
+                        <li><small>1993 : Ruby -> Mainstream</small></li>
+                        <li><small>1995 : PHP & Java -> Mainstream</small></li>
+                        <li><small>2001 : C# -> Mainstream</small></li>
+                        <li><small>2002 : F# & Scala</small></li>
+                        <li><small>2005 :
+                            <a href="http://en.wikipedia.org/wiki/History_of_programming_languages#Current_trends">
+                                Functional programming in mainstream languages
+                            </a>
+                        </small>
+                        </li>
+                        <li><small>2007 : Clojure</small></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Les langages fonctionnels existent depuis toujours ou presque</p>
+                    <p>Ils reviennent sur le devant de la scène, mais pas forcément dans le sens "pur" du terme</p>
+                    <p>Pourquoi ce paradigme n'a pas été plus utilisé plus tôt ?</p>
+                </section>
+
+                <section>
+                    <h2>Phase 1 : obstacles techniques</h2>
+                    <ul>
+                        <li>Puissance des machines</li>
+                        <li>Utilisation mémoire</li>
+                        <li>Processeur mono-coeur</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Phase 2 : scientifique et académique</h2>
+                    <ul>
+                        <li>Application dans la recherche</li>
+                        <li>Utilisé pour dans l'enseignement</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Phase 3 : application industrielle spécifique</h2>
+                    <ul>
+                        <li>Programmation concurrente et distribuée</li>
+                        <li>Fault-tolerant systems</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Phase 4 : Renaissance</h2>
+                    <ul>
+                        <li>Contraintes de scalabilité de plus en plus forte (Google, Twitter ..)</li>
+                        <li>Multi-coeurs, parallèlisme</li>
+                        <li>Introduction des concepts dans les langages impératifs les plus utilisés</li>
+                        <li>Montée en puissance de langages fonctionnels (Scala, Erlang, Clojure ...)</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section>
+
+
+                <section>
+                    <h1>II. La programmation fonctionnelle</h1>
+                    <h3>c'est le truc avec les parenthèses partout?</h3>
+                </section>
+
+                <section>
+                    <h2>Les grand principes</h2>
+                </section>
+
+                <section>
+                    <h3>La fonction comme base de travail (Lambda)</h3>
+                    <ul>
+                        <li>"First class citizen"</li>
+                        <li>Elle peut être manipulée comme une expression</li>
+                        <li>La construction de modules complexes repose sur l'assemblage de fonctions simples (composition)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Pas d'état</h3>
+                    <ul>
+                        <li>Une valeur ne peut être affectée qu'une seule fois</li>
+                        <li>Elle ne peut plus être modifiée par la suite</li>
+                        <li>=> pas de "variables"</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Fonctions pures</h3>
+                    <ul>
+                        <li>Pas d'effets de bord</li>
+                        <li>Transparence référentielle</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Récursivité</h3>
+                    <ul>
+                        <li>Pas de "variables" donc boucle itérative impossible</li>
+                        <li>Remplace les boucles</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Fonction de premier ordre</h3>
+                    <ul>
+                        <li>Fonction qui prend au moins une autre fonction en paramètre pour fournir un résultat</li>
+                        <li>Compositions</li>
+                        <li>Développement plus haut niveau</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Closures</h3>
+                    <ul>
+                        <li>Accès au scope de la fonction parent même après un return</li>
+                        <li>L'exécution d'une closure "ressemble" à l'instance d'un objet</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Et bien d'autres !</h3>
+                    <p>Partial application, Currying, Pattern Matching, Lazy evaluation, Continuations, Monads ...</p>
+                </section>
+
+                <section>
+                    <h3>Disponibilité</h3>
+                    <ul>
+                        <li>Certains concepts ne sont utilisables (correctement) que dans des langages fonctionnels</li>
+                        <li>D'autres sont parfaitement utilisables dans un langage (moderne) impératif</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h1>III. Fonctions de premier ordre</h1>
+                    <small>usuelles</small>
+                    <p>Exemples en javascript</p>
+                </section>
+                <section>
+                    <h3>map() ou transform()</h3>
+                    <pre><code>
+[1,2,3,4,5].map(function(a) { return a + 1} );
+                    </code></pre>
+                    <pre><code>
+output : [2,3,4,5,6]
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>reduce() ou foldLeft()</h3>
+                    <pre><code>
+[1,2,3,4,5].reduce(function(memo, a) { return memo + a} );
+                    </code></pre>
+                    <pre><code>
+output : 13
+                    </code></pre>
+                    <small>Existe aussi avec reduceRight()</small>
+                </section>
+
+                <section>
+                    <h3>filter()</h3>
+                    <pre><code>
+[1,2,3,4,5].filter(function(a) { return a >= 4 } );
+                    </code></pre>
+                    <pre><code>
+output : [4, 5]
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Disponibilité</h3>
+                    <p>Natif avec ECMAScript 5</p>
+                    <p>Partout avec underscore.js</p>
+                </section>
+
+                <section>
+                    <h3>Fonctions de premier ordre</h3>
+                    <p>Ecrire des boucles manuellement est sujet à erreur</p>
+                    <p>Réduit la quantité de code</p>
+                    <p>Pas seulement pour les collections</p>
+                    <p>Abusez-en !</p>
+                </section>
+                <section>
+                    <p>Java < 1.8 : Guava (tranform(), filter())</p>
+                    <p>PHP : array_map(), array_reduce(), array_filter()</p>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h1>IV. Fonctions pures</h1>
+                    <small>Pas d'effet de bord</small><br>
+                    <small>Pas d'état</small>
+                </section>
+
+                <section>
+                    <h3>Qu'est-ce qu'un effet de bord ?</h3>
+                    <p>Modification d'un état externe</p>
+                    <p>I/O, UI etc..</p>
+                    <p>Une application a besoin d'effets de bord mais...</p>
+                </section>
+
+                <section>
+                    <h3>...Les effets de bord</h3>
+                    <p>rendent le code difficilement testable</p>
+                    <p>rendent l'ordre d'appel des fonctions primordial</p>
+                    <p>rendent difficile l'exécution parallèle du code (synchronisation, lock, écrasement...)</p>
+                    <p>Que faire ?</p>
+                </section>
+
+                <section>
+                    <h3>Cloisonner les effets de bord</h3>
+                    <p>La majorité des fonctions doit être pure</p>
+                    <p>Les effets de bord doivent être limités à une(des) section(s) de l'application</p>
+                </section>
+
+                <section>
+                    <h3>Exemple simple</h3>
+                    <small>En PHP</small>
+                    <pre><code>
+function showNegativeNumber($numberList) {
+    foreach($numberList as $number) {
+        if($number < 0) echo $number;
+    }
+}
+                    </code></pre>
+                    <small>Comment tester ce code ?</small>
+                </section>
+
+                <section>
+                    <h3>Version "cloisonnée"</h3>
+                    <pre><code>
+
+function filterNegative($numberList) {
+    return array_filter($numberList, function($number) {
+        return $number < 0;
+    });
+}
+function showNumbers($numberList) {
+    foreach($numberList as $number) {
+        echo $number;
+    }
+}
+                    </code></pre>
+                    <small>filterNegative est parfaitement testable</small> <br>
+                    <small>showNumbers peut-être ré-utilisée</small> <br>
+                </section>
+
+                <section>
+                    <h3>Fonctionnel mais ...</h3>
+                    <p>Simplement une bonne pratique</p>
+                    <p>Respecte le principe SRP (Single Responsability Principle)</p>
+                    <p>Utilisable partout</p>
+                </section>
+
+
+            </section>
+
+            <section>
+                <section>
+                    <h1>V. Transparence référentielle</h1>
+                    <p>Exemples en Java</p>
+                </section>
+
+                <section>
+                    <pre><code>
+class Foo {
+
+    private List<Integer> myList = new ArrayList();
+
+    public Foo() { myList.add(1);myList.add(3); }
+
+    public int sumWith(int a) {
+        int sum = 0; myList.add(a);
+        for(Integer i : myList) sum += i;
+        return sum;
+    }
+
+    public List<Integer> getMyList() {
+        return myList;
+    }
+}
+                    </code></pre>
+                    <small>Résultat si : foo.sumWith(1) ?</small> <br>
+                    <small>Résultat si : <br>foo.getMyList().clear();<br>foo.sumWith(1);</small>
+
+                </section>
+
+                <section>
+                    <pre><code>
+public class FooG {
+
+    public int sumWith(List<Integer> myList, int a) {
+        int sum = 0;
+        for(Integer i : myList) sum += i;
+        return sum + a;
+    }
+}
+                    </code></pre>
+                    <small>Pour toute valeur de "myList" et "a" équivalente, chaque appel retournera systématiquement la même somme</small>
+                    <small>myList n'est jamais modifiée</small>
+                </section>
+
+                <section>
+                    <h3>Java 8</h3>
+                    <pre><code>
+public class FooG {
+
+    public int sumWith(List<Integer> myList, int a) {
+        return myList.reduce( (memo, i) -> memo + i) + a;
+    }
+}
+                    </code></pre>
+                    <small>Plus aucune variable</small>
+                </section>
+
+                <section>
+                    <h3>Transparence référentielle</h3>
+                    <p>Limite les effets de bord</p>
+                    <p>Facilite la comprehension du code</p>
+                    <p>Facilite les tests</p>
+                    <p><strong>Une fonction pure est forcément transparente</strong></p>
+                </section>
+
+            </section>
+
+            <section>
+                <section>
+                    <h1>VI. Closures</h1>
+                </section>
+
+                <section>
+                    <h3>Définition</h3>
+                    <p>Fonction dans une fonction</p>
+                    <p>Scope de la fonction parente conservée après exécution</p>
+                </section>
+
+                <section>
+                    <h3>Exemple : méthode privée</h3>
+                    <small>En javascript</small>
+                    <pre><code>
+var myObj = function() {
+
+    var myPrivateVar = 10;
+
+    var myPrivateFunc = function() {
+        myPrivateVar++;
+        return myPrivateVar;
+    }
+
+    return {
+        myPublicFunc : function() {
+            return myPrivateFunc();
+        }
+    }
+};
+                    </code></pre>
+                    <pre><code>
+var o = myObj();
+o.myPublicFunc()); //11
+o.myPublicFunc()); //12
+o.myPrivateFunc()); //o has not method myPrivateFunc()
+                    </code></pre>
+                    <small></small>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h1>VII. A quoi ca sert ?</h1>
+                    <h4>En résumé</h4>
+                </section>
+
+                <section>
+                    <h3>Code propre</h3>
+                    <ul>
+                        <li>Fonctions courtes qui ne font qu'une chose</li>
+                        <li>Ré-utilisation facilitée (fonctions de premier ordre)</li>
+                        <li>Simplifie largement le développement...</li>
+                        <li>...En évitant des Design Pattern complexes</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Testabilité</h3>
+                    <ul>
+                        <li>Fonctions sans effet de bord = test trivial</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Maintenabilité</h3>
+                    <ul>
+                        <li>Chaque fonction ayant une responsabilité définie...</li>
+                        <li>...Il est plus facile de se réprésenter l'exécution du programme</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Productivité</h3>
+                    <ul>
+                        <li>Fonctions de premier ordre.</li>
+                        <li>Manipulation de collections</li>
+                        <li>Ré-utilisation de code</li>
+                        <li>Simplification</li>
+                        <li>Verbosité</li>
+                    </ul>
+                </section>
+
+            </section>
+
+            <section>
+                <section>
+                    <h1>VIII. Pourquoi c'est important ?</h1>
+                </section>
+
+                <section>
+                    <h4>C'est l'invasion : ils sont partout</h4>
+                    <img src="data:image/jpeg;base64,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" alt=""/>
+                </section>
+
+                <section>
+                    <h4>Promise et Future</h4>
+                    <p>Javascript, Java, Python, C# etc...</p>
+                </section>
+
+                <section>
+                    <h4>MapReduce</h4>
+                    <p>Hadoop (Java)</p>
+                    <p>Traitement de quantité astronomique de données (logs ..)</p>
+                    <p>Parrallélisation du traitement sur plusieurs coeurs et plusieurs serveurs</p>
+                </section>
+
+                <section>
+                    <h4>Architecture non bloquante</h4>
+                    <p>Node(Javascript), Playframework (Java, Scala), Servlet 3+ etc..</p>
+                </section>
+
+                <section>
+                    <h4>Actor model</h4>
+                    <p>Abstraction au delà des threads/processus</p>
+                    <p>Système distribué, fault-tolerant, daemon, async messaging</p>
+                    <p>Exemples : Akka (Java, Scala), Theron(C++), Erlang (natif)</p>
+                </section>
+
+                <section>
+                    <h4>Et surtout ...</h4>
+                    <p>De plus en plus de concepts sont intégrés dans les langages impératifs</p>
+                    <p>Il faut pouvoir en profiter</p>
+                    <p>Des langages hybrides montent en puissance (Javascript, Scala, Ruby)</p>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h1>IX. Comment apprendre ?</h1>
+                    <small>Sans avoir fait math sup</small>
+                </section>
+
+                <section>
+                    <h3>Penser différement</h3>
+                    <p>Le plus difficile c'est de changer la manière dont on construit le programme</p>
+                    <p>et donc penser différement</p>
+                    <p>On nous a appris à programmer de manière impérative</p>
+                </section>
+
+                <section>
+                    <h3>Casser ses habitudes</h3>
+                    <p>Le plus simple pour y parvenir est de s'imerger</p>
+                    <p>Apprendre avec un langage à tendance fonctionnelle très importante</p>
+                    <p>Le(s)quel(s) ?</p>
+                </section>
+
+                <section>
+                    <h3>Langage débutant "friendly"</h3>
+                    <ul>
+                        <li><a href="http://clojure.org/">Clojure</a></li>
+                        <li>Immersion</li>
+                        <li>Typage dynamique plus abordable pour un débutant</li>
+                        <li><a href="http://www.webnoir.org/">Framework web intéressant</a></li>
+                        <li>Fonctionne sur la JVM, intéropérabilité avec librairies Java</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Langage débutant "friendly"</h3>
+                    <ul>
+                        <li><a href="http://www.scala-lang.org/">Scala</a></li>
+                        <li>Moins dépaysant (langage hybride)</li>
+                        <li>Typage statique</li>
+                        <li>Grosse marge de progression, peut-être aussi simple qu'extrêmement complexe</li>
+                        <li>Fonctionne sur la JVM, intéropérabilité avec librairies Java</li>
+                        <li>Technologies qui font le "buzz" Playframework, Akka etc...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Apports personnel</h3>
+                    <li>Voir les mêmes problèmes sous un autre angle</li>
+                    <li>Maîtriser les concepts fonctionnels vous aidera à écrire un meilleur code impératif</li>
+                    <li>Ajouter un nouvel outil dans votre boite à outil</li>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h1>X. Quelques exemples</h1>
+                    <h3>En Scala</h3>
+                </section>
+
+                <section>
+                    <h3>For comprehension</h3>
+                    <pre><code>
+for(
+    p <- persons
+    if !p.male
+    c <- p.children
+) yield (p.name, c.name)
+                    </code></pre>
+                    <small><=></small>
+                    <pre><code>
+persons.filter(p => !p.male)
+       .flatMap(p => (
+            p.children.map( c => (p.name, c.name))
+       ))
+                    </code></pre>
+                    <small>La version Java rentre pas dans une slide :)</small>
+                </section>
+                <section>
+                    <h3>Parallélisation</h3>
+                    <pre><code>
+bigList.par.map(line => processItem(line))
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Le type OPTION</h3>
+                    <small>En finir avec les NullPointerException</small><br>
+                    <small>Une collection d'un élément soit égal à Some(value) soit à None</small><br>
+                    <small>Pourquoi une collection ?</small><br>
+                    <small>Parce que remplacer if(!null) par if(!None) ca nous avance pas beaucoup</small>
+                </section>
+                <section>
+                    <h3>Le type Option</h3>
+                    <pre><code>
+def findById(id: Int): Option[User] = users.get(id)
+                    </code></pre>
+                    <small>Récupérer une valeur sans se préocuper de si la valeur est nulle ou pas</small>
+                    <pre><code>
+findById(1).map(_.age) // Some(valeurAge)
+                    </code></pre>
+                    <small>Et si l'age peut être lui même "null" ?</small>
+                    <pre>
+                        <code>
+findById(1).map(_.age) // Option[Option[Int]]
+findById(1).flatMap(_.age) // Some(valeuAge)
+//ou encore
+for(user <- findById(1); age <- user.age) yield (age)
+//filtrage
+findById(1).filter(_.age > 30) // Some(valeurAge) si condition remplie
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h3>Future et Promise</h3>
+                    <small>Imaginez une série d'actions asynchrones, mais avec des dépendances</small>
+                    <small>En impératif, on utilisera des callback</small>
+                    <small>Si le nombre d'opérations est important on arrive rapidemment à :</small>
+                    <img src="data:image/jpeg;base64,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" alt=""/>
+                </section>
+
+                <section>
+                    <h3>Le type Future</h3>
+                    <small>Une collection également</small>
+                    <pre><code>
+def doStep1():Future[Int] = ...
+for {
+    step1 <- doStep1()
+    step2 <- doStep2()
+    step3 <- doStep3()
+    step4 <- doStep4(step1, step3) // seul exécution déterministe,
+                        //nécessite des valeurs des futures précédentes
+} yield combine(step1, step3)
+                    </code></pre>
+                </section>
+
+            </section>
+
+
+
+            <section>
+                <section>
+                    <h1>XI. Ressources</h1>
+                </section>
+                <section>
+                    <h3>Général</h3>
+                    <li><a href="http://www.defmacro.org/ramblings/fp.html">Functional Programming For The Rest of Us</a></li>
+                    <li><a href="http://www.cse.chalmers.se/~rjmh/Papers/whyfp.pdf">Why Functional Programming Matters</a></li>
+                    <li><a href="http://blog.jelastic.com/2012/07/24/functional-programming-is-a-ghetto/">Functional programming is a ghetto</a></li>
+                    <li><a href="http://fr.slideshare.net/fsarradin/scala-vs-java-8">Scala VS Java 8</a></li>
+                    <li><a href="http://stackoverflow.com/questions/584494/what-functional-language-techniques-can-be-used-in-imperative-languages">Functional techniques used in imperative languages?</a>
+                    </li>
+                </section>
+
+                <section>
+                    <h3>Javascript</h3>
+                    <li><a href="http://eloquentjavascript.net/chapter6.html">Eloquent Javascript</a></li>
+                    <li><a href="http://osteele.com/posts/2007/07/functional-javascript">Functionnal Javascript</a></li>
+                    <li><a href="http://underscorejs.org/">underscorejs</a></li>
+                </section>
+
+                <section>
+                    <h3>PHP</h3>
+                    <li><a href="http://www.phptherightway.com/pages/Functional-Programming.html">PHP the right way</a></li>
+                    <li>
+                        <a href="http://jburrows.wordpress.com/2011/06/24/the-state-of-functional-programming-in-php-5-3-x/">
+                            State of functionnal programming in PHP
+                        </a>
+                    </li>
+                    <li><a href="http://usrportage.de/archives/941-Functional-programming-in-PHP.html">Functionnal programming in PHP</a></li>
+                    <li><a href="http://blog.lcf.name/2011/12/functional-programming-in-php.html">Functionnal programming in PHP (bis)</a></li>
+                </section>
+
+                <section>
+                    <h3>Java</h3>
+                    <li><a href="http://functionaljava.org/">Functionnal Java</a></li>
+                    <li><a href="https://code.google.com/p/guava-libraries/">Guava</a></li>
+                    <li><a href="http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html">Java 8 lambda </a></li>
+                </section>
+
+            </section>
+
+            <section>
+                <h3>Le mot de la fin</h3>
+                <pre><code>
+def apply[B](f1: (A1, A2, A3) => B, f2: B => (A1, A2, A3))
+                    (implicit fu: InvariantFunctor[M]): M[B] =
+    fu.inmap[A1 ~ A2 ~ A3, B](
+        canBuild(m1, m2), { case a1 ~ a2 ~ a3 => f1(a1, a2, a3) },
+        (b: B) => { val (a1, a2, a3) = f2(b); new ~(new ~(a1, a2), a3)}
+     )
+                </code></pre>
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBhQSERUUEhQWFRQWFxQYGBYYGBUWGBYYFRQXFhcVGhcYHCYeGBolGhcVHy8gIycpLCwsFx4xNTAqNSYrLCkBCQoKDgwOGg8PGi0kHiQsKS0sLDAsLC0sKSopLCwsLywsLCwsLCwsLCksNCksLCksLCwpLCwsLCwsLCksKSwsLP/AABEIAL0BCgMBIgACEQEDEQH/xAAcAAAABwEBAAAAAAAAAAAAAAAAAQIDBAUGBwj/xABHEAACAQIEAwYDBAcGBQIHAAABAhEAAwQSITEFQVEGEyJhcYEykaEHscHRFCNCUmLh8BUWcpKy0iQzU3OCovElQ1Rjg5PC/8QAGwEAAgMBAQEAAAAAAAAAAAAAAAMBAgQFBgf/xAA3EQACAgEDAgQCBgkFAAAAAAAAAQIRAwQSITFBBRNRcSJhFKGxwdHwBhUjMjNCUoGRJTRisuH/2gAMAwEAAhEDEQA/AOooKeWsti/tEwNv/wCeLhHK0DcP/p0+tVI+2XCgmbV4Acz3Yn2zSKZtaRXcjoi0uuY4z7bbCj9TYuOf4iqD6STQ7Kfa1cxOLW1et20tvIXLmkNyknedeVULHTxR0kUuaABR0BQFAB0KFCgAUVCaMVAAo4oqOgAUKFCgAUKKaZw+OtuzqjhmQgOAZyk8jQSP0c0U1im7dG5xazg7EG1FzvGic0W2IynkAV350WQbaaE0QoVNgHNHNJoUWAc0dJoUAGaKhNCgAUKFCoAFEaBNJY0AJNJo6TUgeSzjwRJb2n8KaPEEG0k1JwXZDFXWU2cNeuKeYRo/zEAVvuDfYti2Ktca1YjXX9a3uo8PsTUAc8/XFcyoAOpImOsbx50MG11biuHh1IZfUGRV52g4Y+BxHdtkuuVDE5YyzmDoFnSI8xBFPcI4Yz4nBulohjeWEQgi4LZDtEmAwA686XFty2jNqqz0L2d4l+kYWzegguikggggxBEHzBqzFR8JiluIHQyp25ERoQRyIMgjlFPimixQFKiiAo6gkFFR0KACoUDQFBAKFGKOKkAqpON9rbGGzd44zKAcsifF8OnmY9qc7V8eGDw7XYk6xzjSZjnH415k4jxx7zl3Jdj+8Z5z+JqAOv8AFftjUKwtIQ+oVjBWCNHkbxqYrI8A+0tsK9x8pIYbGPE2aQSTsNWJI1JNYLMzHQkzsPyH5VY8O7M37s6FR1aR/OqNrqy0U+iOk4z7X2uYMhSe+uZgxy5VtpP7J5kjSeQ86m/Y52ednuY66IDApannJ8bDyAGX1LdKwN7s2MPaFy7LICveROozbD+ddu7Ldp7V2xbyhbSQAiZl0AgAZR8PprUR+J2Xl8Co0tCaZxdwi25X4grEeoUkfWK5p2Z+0PFXsVZtXWTI7ZTCAHUGNRtrFE8sYNJ9zVpfD8uqxzyY6qHL+v8AA6jNHNcz7X9vsTh8XctWWTImUaoGMlQTqfM1ado+2V21gMLftle8vZZlZHwEvAO3iiqfSIfEvQ0fqfU1ifH7Tpz8r5/sbmaE1g+ynbe6+HxOIxRBS1kAyqFkkHTzJOUe9ZzFfaVjbzN3ICKAWyogchRuWYg7czAFVepgkn6jMfgeqnknDhbeG74vrX5R1+q3iPaPDYdgl68ltiJAaZiSJ0HkawfZf7TrrXltYoKVchQ4GUqToJA0In76o/tJxjvjnDCBbARdCJX4p131ZtfKqT1UfL3xNOm8ByPV/R9Rwqbtd/Y65w7jVnEAmxcW4FIBKzoSJA1FSy1cj+zTi91L4sogNq6/jbKxy5UaPENB711mnYMvmw3HO8U0P0LUPEna6r1r5/3sOaKhRE085gCaKiJos1QBC4hxFMPae7cbKiCSfuAHMk6Aedcr7J9u8Xi+MqovBLD5i1hiuUKAYVJ1NzY6b61B+0jte2LxK4SywFtbgSWIVWuzlLsTplUyPmelNdtuxmCwq4a1ZLtiwAzsreFx/wBR/wB05vhyxoPKaG6VglZM+3Hidrv7dq3aQ3wue5cjxAEQidCYE67aU59mXGRjOIWMyJZGGwzqlsH4mY+O4J1LHn6VnrQzMxuuxuEyddTp+98R06mia0FKPacq4IZTuQZ5MNR86UsqU6L7Phs74oyYggbXULH/ABoVUn3VhP8AhqeDWF7HdrjfvhMVCXlTKnS4CQWads2iiPI1uAaamn0KVQ5NCkTR5qkBeajmkTRzUAKo6TNFNAC6MGkTRM8akwBvUgYj7XM1zDW8Og1uPLsf2LajU9ZJgQK44ewjlviVRO7fkK6r2n4wMRelfgUZVPUTM+5qlx58BA3O5rLPK74NcMSrkyXCrNq0HUNOQDPdiCZMADoCSABsAGJnQVMxSXLLDujnDZs2qyjqxVkIGhiJDLG9R7WBZO8UqGS4AGzBzOVswIK6gzzq24fhwAAOW0AhVHQZtSdzNRKSCMGFYFxwe8OZWEFSND5Gq/sfhxheId00w8d0S0aEzGuhIIjUiri/fA2qvxlkPcsO8KLd1fFIEBj1O3iy1GKfNE5cfB3XDarB/rrXCcC3c41P/t3wNP4bkH6Cu64RQEX0G++1cR7Y2e7x+IA0/WFh/wCUOPvpet4UZfM9D+jD3Ty4X/NH/wA+8a7WYnvMbiGH/Vcf5Tl/CpvHeI58BgU/dF+fa4FH0qJwrAd+mLuNqUtd5P8AEbqEn5Z6qnvEhVJ0WY8pMn61z3Jq3/V+J6+GGMnCC64mv+lfebvs5wC7iOE3Es5Q1zEA+IwCqBecHn91QMFgv7Ne8cRctFnsXbYt22LvmcCJEAKPMmrhcU+G4CpQlWuNEjcC5caSOnhWPesp2T4el67d7wSEsX7gH8SroT1gmfatTpOCS+KkcXFvyQ1M8kv2W+VpLl1Xft2KjCXMro3RlPyINbD7WD/xif8AZX/XcrGWtx6itl9qx/4xP+yv+t6zx/gy90dbUL/UMD/4z+4u/siP6m//ANxP9JrfTXP/ALJT+pv/APcT/Qa3maurpf4UT5/45/v8vuvsQomiJpOaklq0nHFTRTSc1FmoA879ieyVrid2/bvXHt3EUMpXKdc5FzMp31I5jeixOF/R7t21mBNpjbkyJFoZZjWJ1MUMZicTwbij3GCXHOd9iqXUuTJgfCZGw2Ipd3jBxV669213L3SGKQwiQAGGbWDG/X1pOToXh14It24V1PhIEEgkyDrNC3d2jZTIA015eVR7+EZDlEDUySTr7cvuptA7AeHwzDKNz5gxFJW2uRzu7RrrPEJCliFuIw9RqJ19Na7NwTiHfWEuHcjX/EpKt9Qa4NaUWbJLchJnX+uldR+yniJu8ORjuHvA/wD7C33MKvg6C8vU24ahNMZqMNWkUPZqPNTWahNADuajzU1NE94KCzEAASSdAB1JqAHc1Y7tZ2lzTZsmR+2wOh/hHl1+VRu13b+zbHdpdChh4n1kg/sr0Hn8qytnHK6zbIIO0c/Kl5G64GY0rtktYAlj86hMxbbQfeaqOJXrs+MEKOQpNriWaFGkcudY5G2KLPEY2NDVe/FSTA2oY4+Hxbjl5efnTFhVPMa1TkdSHXxkAE7UWK4wotNmCmBop5kGQvuQKF7QH+uVQ+A8AfEYhXYzbQho5GPhHz+6r2oq2VjFymkup27sxxEtaVWEGBA3KyJNs9QDIB/lWO7d9k8RexjXLNpnVlSSCvxBcpGpHQVaYNijK8yymY12/GtdgMaLq5gCDsQYkH23HnUwrPDZI2LNk8Nz+fhSdqnfTkxnYnstdtYfFLftlGurkUErqMjdCebCsh/cTHf/AE7fNP8AdXa6KmS0kJRS54DF+kOpxZZ5Eo3Or68Uq45MvjOzT3eFphoAuLbtkAnQOupE+7CfOsRwjsjj0d8iNalHVmOWGUjVB1mANPpXX6I1eemjNp+gjTeNZ8EJ40k1Jt8q+X1/LOL2+w2NBH/DtuOaf7q2fb/sldxTJdswWVSrKSFJGYkEE6czpW0NCRVY6SCi4+o7L4/qcmaGaknG64fN115OadkuDcQw19BkZLLOpu62yCBpO5O3SulZqI0VOxYljVJnO1+ulrcnmTik/l39wE0U0DSTTTAGWpOahRaVAHMPtg4A963YvWlLXLb5DlEnI+oJ8gw+tZfi183LIGIZVxSqO7cTOmwZo8KkTodK6xxcXnsOuHcW7pHhYiRM7eUiRPKuJcU4ue/uLige+DEOFgSf3SFlT7daXki3TRaDXQZbjFyw5TEWvGAOkEHUEciD1BpdztQmTS2YOnIfjULiqXsS6EJc0GRFNt9hqFBjWnMN2NxbRGGun1Qj74qrgny0XUmugvCj9JDvfZltoQAixuQdyfKuq/ZNiEtYe5bziO9zJmIBIZQCB11Fc+wvYTHkEC1lBiQTbAMbftzWl7KfZvdW8t3GOoVCCttWkswMiSNAJ9ask0yrao64LlH3lQv0hf3h86L9KX94fOmi7J/eUO8qD+lL+8KH6YvUUE2T+8rLfaPdf9Dm2YAu2y/mniH+rLV1+mp+8KqO1d8PhLgVWuN4DkUeIw6kx101oIs4vjcJ37G53iKVMMtwkHyI0MiKseE37aBbVtw5DFywBAGgGUTr7+dSsTwC5iW8OBugjZ3y2V/8ix1HpNWOM7GPhsHcc3rVp1UZLdpCczEjRrrwzHU7Cl7e43f8O0RfvsdIaOumvzqvuYm0Jyoc3MnQ/Ss1hb2LNzQmVPik+ECYk+X5Gt3wnsk2LVnuXDYUKGnJmLBgWVtSAFy6+hFInjvoacc0nz0Mxi3JMg7jaoYxBTn7b1N4pwe5avm290MFgFl1BPl5Umz2cVzo7t6x+VY3kjF8s6/0PLNXFcB4S696EUSTy29yeQrccOw6WECTmb9qJgn0rLcTu/oK2mtaDMA/mCJ03M6ESZrV2eNW1QTz5gGSDrtr8qVmybkmuhp0um8uTT5l+JMwnENdQRO3p/U/OtPwG/8AEPIfTb6GsHiu2GFVsri56hZA9YMitT2cxi+K4hzKwXKRsRvz9qbpFLehXiVeVK+GarvTRd6ar/7S8jSf7SPQ11zy1lj3hou8NVx4gelJHEj0+tAWWec0Mxqr/tI9KH9oHoaAss81EXNVox56fWiOPPSigssi5pJY1Xf2gen1pJx56UBZZ5jRSarP049PrRfprdPrQFlLjHdbVxlILKjEdJCkjc9a5b2G4VbvY0vdfNll1zCM7kgyQehJqGcdxLH+FRddDyVcqe50H1q/7NfZpjLd5L1x7dsgzlLZ2I6Qun1qCVwdIS8p0p62NNj70+MPoM2/lSL9kAanT1qSogMoP4UDcWfiHprSBhV5H606uGXr8jQQGoB50aW9djUe5hRyZvoYpzuCP2j71IDxT296HdxM602qNOsEehpZaOVQAkMB/PSlxO1JJkaQD1Ov3Um5bYjQieuVj9JqQJCEDmKwfa/i1j9Ji+zMbRBSyM6kOJIfbKyklTOu0VtXwGdGRjowjaI8/UHWsvjMXfsAFgbuUwA2rgqYbKd2XfTf15IzZNi6GnBjU38ToruGYNsQ/eXk7nC2yCLUEG4xiBlbxEaCc2+2x0TxzjdzEuyliuHTV1HMKdidiSdAAI1pb8ReGg/EC2o8ZLmCQPkPIAbUsYVe6KBJzANGYhiRIAPlP41zpynPk72myabB2bfrX1lVh1W4pJXKTruIWfFABOo1+lTBgsUNEVP8R/KamW8HbKCSgJKgxsoESOvKJPWre2IiPMn2rJKNO2dTDqvNT29DI4vhd8lBduaZmMKBAhGJP31b4fgHhk3GeY5kCJ6CKlY9vHbHOLp9yoH/APdTLAyp7AD86hvohik+WvX7kM4Xs9a08E89a0eEsELCqBHp91UfD7r54J5giPefwqyN2d/vI+gpuHJsdox6rG8q2y6El3MwVI9qIgjZZ/8AKPwpdi8NtfvinWJ5RXZxZVkVnldRp5YZU+gyobnm9jSWdgRCz/XkKeVW5kUCnnNOM41bY81j0M0bCebemn5UtVUcz8zSXPMNQAkGOvvFJuQ3P76dzHyJpBvRvH0/OgCP3RGzD3ml21aNTJ8qI45NpWTsMwk/WnFujnHzFACXnr9KLP6/KnGugayBUc8Tt/vCgCaHQCCdugmPaiN1QJAmfKKq8Hi2uHx6DmI5edK4llMHOwtjYAaE9I51BFlhf4gUHwz9frUez2mtOwtsup3PIHpFQ7eJzLlQsNZ1O/kQNhWdv4RhdOZgTMyNtenOpIbNpf0OiEjrsI9aYu34UHJoTEn8JqtscbugAA6CNY/On/7wXGbxGVjaFIoJsk2b8iTOh2iPu0NSlu7aT8jSuGcQsYgnMuVhodfrIqacFbAlXzA7Exp5edQBEgnYD504RpUe5eytBiOo2NN9/PQ+RoJHmJ8vbU0kXRzb20FRr0EwR/6qJSm2X6g0Eew9jOJd2jPpAHPqdBWTxLm5de4DnQkBACMoY7vPMfjNW3G0DKVUR4W9zFVNlu7gkgJ8TKRPiOqqVjYk5jHTpXKzZfMnS6I70dN5OmTl+82EqksAxUkG5zBKwugeNQryyyIginXtZVCk8iJMtEBmTTdizGCOgFAoxRbts+C04OQIrBlBbOuaZygO2kcxJMU+LZe4gRmhQ7HLl1L92FBzKw0KiDE9IqtozUQjb1FzvFYrA0jxKYMEESdjvrypS4/ICR8JgQTsCdx+VFi72ZQuq5JA1GgnVZ1JkiSeZmmsRYlCNBKzO+qidufL50Unwy0ckoO4uh25eL3bZ697162wB/XSrS82oUbD8KzmAxDJJaCdY35Hfz0+6rO3i5GbyrHkqMqPRaaTy41NltglksfUfWpQcAT09qobnFu6tyPiI/M/iKjcN4/cuK4uQQNmAA1/dj+tqqmNeKT5LzCcXzMQQAvI6z61ZriwujEAToSYrI2rkVd8PxYuCDI8/XaPetOmzbZqzDr9NvxOkWz4oAaEn01pNvFdJ9waYXAgbH6D8qaggnxj3AH3V3Tx9ljmnlTNy0eUa+VJHm31gUGvDmxH3UE2LF+N/wAaTcSREn6Cm/7Qt7G4s+oFBsYg5z8qAK3F8JDHUT586cSw6AD4x57/ADqwtXFI0BE+tGWFBFERLHMAD5mlfox8qkgeZoQKgkqU4iikamQslVR20/elQQB6xTrXhdAck5CJGXUH5bVzPhPam/ZkK5EiDz09/U1rOzfacWrJW3C3GPxOJViSAS3oPurKsk41fJoeOEunBY4vG5vDaWBJ3kfzqPawxFWjX4uKsWr5cE5rYFsjzK6jn9Kn3OAuJKw402jP8t6bHNGToTLDJclKEjyHU/lTN3Gcl+dO4m14oaRHI0pLKjlThRCGNfZZ5ydR7VI4fxC4vh0Zf3dx9atOEX0DlCqkkc/Fp0q+u8MtOoC2xbPUQPnQSkVVrGWY2KH+GQPcbVAxXGLQmFZvl+daA9nbZ0N0ieQAo73Yy0f+W+U6bgMPM8jUE0Zb9Ft3CNWRjtJI+tS7VpbbZc+Z4kKdT6zWtwvZuwqjwhjzJ5+0xWF486pfu2yuVFeLbzERGkTJ56jasmryOMOO51PC9PHLmuXZWO454beAFYD1yj+fyqj4nxUaMhDTAVRqzwYjLyM6T9KuMZiFW3kulnkeImNOmq8wKouE9mlN43zmC+EW1MmBzMH+Hb1msEahG2b8ilqctLovs9S0biDWVtqygMPEQskKX5MCfF91QsPxVLMi0ol7mYnLAU65VEEnKCdpgSaR2jlbhndhy5atp9az9hzbMjUGZHWu1Dw/zdPHJH95nIzauMM8ofyl62JLsWaSzGS3XXUFRp9NtfKrG3elcswRvtAn7qzxxZKlrcZhqQ2msk6R607wbidy4sC0jAEbMTJHUtuYrmShKDqSocmpcouOJIMmnSREzrCiqbB8UmUjUGDuCNdiPnVtxO2xyZvBmBAjXSVMaD+tazuDtxfuD91vu6/U+9Zs0E4ts7Phs5b9i6MZxPEnvXMiTJ032/Lar3C2ggCLsOfUnc1muA3/ANY+UEmWkxPPSI960+H01YhfU6+mUa0jOtrUV0O1ilvjuJ9jDZjU+0QrBR5TUWxjQRCiPvP5CnQvPlS4uhc1fDNCtyec0kH+tKg4YkqCp0PU8/wqSrkDqfSvSxe5JngcsHCbi+zY5m5aUTrPSm++66UX6QKuUGrmDX9wH6UQww5Aj5VIW8DsaDa8/oKAoYyEbT5zJ/lSWRp0aPKBT4J/qKJ2oJAH670M486AYHlQyjoKgDjaWQGVXhSQDEzHlNWFkHSdOh/CozW1XfxHpvrSLuOa14mMgn4Oa+h2PpWWPJqaSLvCcQuWmDLuNjpFaf8Avm1yy6OP1jLCkHQE6a+XlNZrA8YV0BYTmmDt8xUDFteRyyhbls65B4XX0POpcEyttG3uNYtpbWxfcuWIK3CHDzzIIGmnLTUVoh2dNyzmzBGjbXKenPSuYcM4sl7RTDD9ltGB/H2racN7X3EhWE6jxD4vQDal7ZxlcWXbjJU0TrPCWsAMUaeR0M+40UVb4K07Ae0nkPIdTSrHaa2qnvGyEaePQgnYRvtV3YKMoaAZ5rIHsRpTY576oS8VdCvuWAo1zE8tqbuY8IDn8PQc6kXOEFpKOQZ07zn5yNvcVneIdmsQWl1zf4TI9zTozjLoLlFoncV4yww1xkPiCkgAx66/PasdwzCs752KuqmTuQWGoGZuc85OnSr/AB3Dri2mBAJCNIzagEagDrVJxPiYw1hWVWuO8raQQqgKNWM7Lr77Vg1KcssUjt6HL5WlyS73X1EHtHeDMC0jKCYBPicjrzAHl0qf2YuBcJ3rGfjC7yzBjAHzrDY7jHfvnZWt3gwJWZXIxkkctv66SODceuJ4ZJTMzKp5EQR8/wAapPBSthj1lY/LiqvuW3aFizA/EQTI5/zquUgiZ0+6tDh7JujSARr786puNcGMuF05xyNdPQa3Yo48nTszl6rT725x6lfjwQkoVYMDqCZ+7T3q17P4gLh0ZCEyHLckSZ+LQcyZ9AKx4cAwSV6kEjb0rRdneH3O6YowPeNzMghZAk9ZDfKuj4vDD5W7vYnw+OSU3Fejf+DVK3fB2JIzEBPILPI9ZPyqj4vgHw63LkZgyiCo5xG3LQCrrh1qWWSrXNAdSQo5xpvH31epaGUCvJ5W7+R6fw+qb7r7zA8Bs27tkBLmUgDMpgHNzOm4PWpw4I3JgY5gzHr0qdxLsZads48Da+JdM0zowH3jWkWcAbS5sOoD7FSSZMbAnfqJ38uaJ7ZO0+p2cU5KNPsQ/wBHuJzmp3D+KBjkuSOh8/PyqVwbihcZMQqh5IDDQE9CP2W+VDi2GtAwywD+0OR9I2pbjtZfepcNDzm4NEYADQgxvv8AjTive309l/I0rgeJsJ4b+W8mkMYOQa/Efp1p7GYFFuHuycp1UDoeVd/SSvEjxHicNmplXuRlxd0cp9SQPrNSLeKbmsfL+jRorM2UK0+4+u1RLxvOpFsMsbkxm05Ab1pOeWNnE5jAE/10NOKfI/Ks1iMPfGj54/inpR2cWtsBVJj9ry9No2ooizROrHYH/KTSrdp+k+xFZ61nzkKGJzhhJK6H66yNK0C3nYQ8qYkxKhegk89tKCUxz9HbmKR+j/xL8/51W4riDzlJylYIMrP+EmIqAeKtzW3PPfeiibOe3saE0XxOfmfyFN28H+3fMnkvIevU+VFay2vhlnO55n06Cm7mKUGXaTyUa/171m9jV7j94vcYFZWNuv8AIeVP2+KumlyB/Fy/lVRe4+dkUL5nU/lVdfxLOZZiamMJdyJTj2N3/ZaYqBBL6Q6aEeZO0etWeBxd3C6ZkusojvfiInbfny5+tYDgvHb1gkW7hVXhWjUET0NavCcRs3G/5qqABE/ETt89zVMlr2L46Z0DhuAsNYa9cOdZDu76Enkq8x7daouE8ZezebuXcI5JASQJmYyaiIkfWmMFicGlvNcvCAZKSZYgwBA0idavOCdpMAWDCd5HgAUE7mASfc1gW7mkzY1HuzV8O7TXC6LdtMofZmUa7b5ScvP4gNxWmw94MuZSD5ggj5is6Gt4gRbcFTozKZ06TymrqwgUKlsZUWNtNBso/GrY5u/iEziuxXcawruHJUCVYCAJiOZ3J8q4b2y4ldJtFrGUJnVSSGtvsQRHOI3r0cDp1rh32h8KyW7yZdbV3MPJSdPoy0yNxyLvfHsOxRWTDNdGlfuYHFcQNxZKqpEg5RAIJnadNZ+dM4TiAB1k07g8ILmhMAEnL1jnO1WD4G2rDSDKQAIGXrPM138fh++Nt9TkS1Gx0i84fxplWV0MTqdYGnvzp6/xbvZBMSN99fSKpb1oHQzpMET8tKawuCuWjnJZgCSCJMdJWmy02LDC1DcKWbJklTlQ/huFreLBriq5kBYJ9CddJ6Ca0iWRZtoqn4APmOf3n3rEYa8e87xycwJyyCI85Om2w5VYvxR40JI+dee1zy5NsH0XyPW+EY8cYyyd39hvbSuT4bgElW2B0OsAHyMampFrimUlTyJGvlUDs/iy9hHjUjKSI3QxsdNoqv7Q4nu8QQDGYKw21kQdfUGsOZS2qi3h6SzTxy/NGsW9mGnlHsagYka93MaMR1mfDWfTiziIMRsadbGMWVyZbf1isrkdqOOidxLFB1AYa5AzMPi0JBI81gMPQjnQt3jetZWjvE0J5How8iKgcSxygoyHYA9NyZWm34j3d23Bm2wyxppMkT90eVXXKoHSVjWNurZhbh+IyIYDQdZB/oVFHG7c/tabeMfTw1P4jiFzNMaAqJ6/+9O4ZrZA+E7a6akda24dQ8cNqPO6zTwzZXN/miPY7ThQcocT+3mGvo2SKvMJ9pWUCVUnlLr+CzUa33OU5lAUanXprVb/AHjwLNBQwRGcomUGToTJOvp0p8dTOXRGGWlxx4NQPtLzCHtKw5gusf6aV/f602hw1owdJdN+oOT8ax97jWHTEBbeG722yDREQEtO+Y7iOWlTuM8Vwtqyt1cOWLMB3byrARqDv05aVfz5ccdSj00bNJc+0lTvh19c4H1y7+lIwXbhbjhO4VZEEs5YZRqNdPnUDC4LC4i2r21XVQdORI1FZ/imDtri1twUtkoAy76mGB6jnrO1R9JfQhaVM6CeL2LyRdsPkBmQAwn1tsS3ypv/AOHf9If5MR/tqrwfZ2JC3SkEaqXUNAnNo+hpz+zyNP0g6fxD/ZQtXxyUemV8HCWvkzqdd6aoUK3GWwUKOKKgA6PNSaFADivFPYfGshkGKjTQJqGrLKTRq+D9s7tpgQxB/eUlT8wda3nC/tG7z/mTP76N3b7blR4LnuAfOuMU/bxRH8qVLEmMWT1Ot4/jfFGBbDX7eJSP+WF7u8v/AOLNL+qFvasbxXtfiLlh7dwEXC8XC8lgoUQvi1Gx310qvwHaN0gE5hp1kfzrW2e0CYwrZxZBDEDvHANxI/du7npBJGtUaSp10HY5NN0+HwzB4bE8xoamnibPGbUjQe2wrZ9oew1vD2Gv2LneIhXMrJDwxAlcpI0J1zAaCRWdw1hH1ESB4l8xvW5eK5MauStF8fhmHUPbGfPsC3itjTtzirctKkrwoNy12osRwIAakz0JEe/SlQ8aVU1ya5/o9UrTtFNfxRcxufnSVwrDmZ8qu7XD1tqeZ3J/lyFPYTB+HM2hbUn91RXOz6+WX2OppfDIYV8y47FYc906uYAcQf8AEozb7DQU9294aO6W6p1tkKf4lf4fkwPzqswnFLltsyj9WIlDz5D0Os0/x/iYxCIpTKFJMzJ1/Z9zrWdZF3KPR5FqN8enqZS1iWHwkg+U1YWeMRbgyWnT3pDqtsyzBBB0J1P51s/s24RYxNi49y2lwd6ynOstoqkAaaDxVeONZew/UataZW3b9O5kWvZkVjuMw/Gn79o3ERU1c5YA3nNp99dNtfZ5giWBVlWZhXK5ZHnI+lSOFcIwmEdjbTYQGbxPHOGO3oIpi0cr6mGfjOPbxF2Op2TwzHxP+z4laCORzAkSNfPnUFuCYVCBCmNwCGLa6EkfhUp0Zzetj9pIBJESw8BCj9kRrWKtYwoW/Vw4Yg5Sckg6sF+e2mtdHYvQ81LI76mwvcHwskGyizuJYTPvUf8AuJhyTFlQg1kFvprUJeJAeNjnG3MbD4vSovD+N3CWDGAzCAJiDvpRsj6B5svVkjivZPBIodLVwtMKQ2k+flVbe7ILdgFHCzr4onzAirbC42HYODA+GRAj15+lSMRxw2oZY106ge1V8uF9CfOn/Uyvw/Ym3a0td75yQYMb7U1xHsml8DJfZbqnnDKdNQY1HPrVnY7Yzozge2p/lTbcYQXMxYAnyHLqRUeTC7oss8/6iOeD4lZBe2SeUkfgKrn7O4uT+qnU/tj86t8Vx5LjqFcZp1gGrdOI6DxjbqPzpEtHjk7HR1c49DzPQFChWszAoU4reEiOkHmKdwtkEMTyHpuQKAI1CgaFSSChQoVAAo6C0ZoCgppwXzudaboTQCdG04T2hxF1Hs22Atm2wKzqoC65TOZQTpExrtWduYhwTuGJ1AEGZIg1pOwGEBtX3/a8Keg1Y/OB8q0OO7MWrsCMhgQVAGuXeBvXPlqI48jg1wd3DoXnwrJF1LkyXD+1RVQGBB/fGp+WmtWD9pLMSO8ZubFRp6CdKzuNwAVio6gTHryp29woLGs6Tt/OiWDC+fUutZrYLbw6LHEdorZEBX31Om3zqRc7V2ogI8f+Op6nWs2bdAW5qfo2LpQv9Zapvt/hF5iu1SsAMjROuqj7pqFf7S3T8EINgAJIHkTz86awPCe8PxRqBtP41pcB2MtAE3GZ4Ow8IP3n61DWDD1Q1S12pVJ0v7L7DHKj3G5sx9STXTewdt8NZZW0ZnzRO3hAHvpR4Phlu2v6tQnoNT6k61IQQf661nlq97UYrgYvDVji5zdyNbheLkxm8Q86mFLVwcx9Y9J1FZbC3DVpYuGnxySRy54YsffhV5BKHvPFoQfFljUQ3P0NY/tFbe1d2ZAwgggieo13rd2Lp01qajBlysAy9CAR8jWmOd9zJPTrsYPhqZwFyyuUaa6nz8vPyqYmDNpGOWASNiSBzrYWuCWSZVAhEjw6D5cvas/2itNbYpmkaEaQQOm9PjkTMzxuJSXbmY5vKoL4kkEax9KkBtIp/EYQJb0Op5/hTBZmbx3pm3bZwTJkfL2NSbqQam8OQaEgGTt59akrXJCsBlMnfQ9IPrVunHbkD9VY/r3p/B8FR0YHeRB6Ty3qf/dpf3h/lP8AuqC6TP/Z" alt=""/>
+            </section>
+        </div>
+
+        <div class="logo">
+            <a href="http://www.iocean.fr">
+                <img src="../images/logo2.png" />
+            </a>
+        </div>
+    </div>
+
+
+    <script src="../components/reveal.js/lib/js/head.min.js"></script>
+    <script src="../components/reveal.js/js/reveal.min.js" type="text/javascript"></script>
+    <script src="../javascripts/config.js" type="text/javascript"></script>
+</body>
+</html>

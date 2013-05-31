@@ -1,0 +1,12 @@
+{
+  "name": "io-prez",
+  "version": "1.0.0",
+  "main": "style/main.css",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {
+    "reveal.js": "2.4.0"
+  }
+}

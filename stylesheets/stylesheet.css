@@ -330,6 +330,10 @@ ul li {
   padding-left: 20px;
 }
 
+ul.list-style-none li {
+    list-style: none;
+}
+
 ol li {
   list-style: decimal inside;
   padding-left: 3px;
