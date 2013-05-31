@@ -5,7 +5,7 @@ IOTalks are events organized by http://www.iocean.fr/ during the lunch hour.
 
 Theses events can take several forms such as :
 
-- Ligning talks
+- Lightning talk
 - Conference
 - Coding dojo / Training
 etc...
