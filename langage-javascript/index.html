@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Le langage Javascript</title>
+    <meta name="description" content="Le langage Javascript">
+    <meta name="author" content="Vivian Pennel">
+    <meta charset="UTF-8">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link href="../components/reveal.js/css/reveal.min.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../components/reveal.js/css/theme/default.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../components/reveal.js/lib/css/zenburn.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../stylesheets/main.css" media="screen" rel="stylesheet" type="text/css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write('<link rel="stylesheet" href="../components/reveal.js/css/print/' + ( window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">');
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../components/reveal.js/lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>Le langage Javascript</h1>
+
+            <h5>Ou le langage du web</h5>
+
+            <p>
+                <small>Par
+                    <a href="http://www.vivian-pennel.fr">Vivian Pennel</a> / <a
+                            href="http://twitter.com/vp3n">@vp3n</a><br>
+                    Lead Developer chez <a href="http://www.iocean.fr">IOcean</a>
+                </small>
+            </p>
+        </section>
+
+
+        <section>
+            <section>
+                <h1>Un peu d'histoire</h1>
+            </section>
+            <section>
+                <h3>1995 - 1997 : Création</h3>
+                <ul>
+                    <li>Création en 1995 par Brendan Eich de LiveScript</li>
+                    <li>Marketing: LiveScript devient Javascript</li>
+                    <li>1997: standardisation amorcée : spécification ECMAScript</li>
+                    <li>Initialement supporté uniquement par Netscape</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>1997 - 2000 : Concurrence</h3>
+                <ul>
+                    <li>Microsoft créé sa propre implémentation : JScript</li>
+                    <li>Flash fait de même avec ActionScript </li>
+                    <li>Javascript était donc voué à comporter des problèmes de compatibilité</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>2000 : Adoption et dénigrement</h3>
+                <ul>
+                    <li>Javascript et la révolution des pages web dynamiques</li>
+                    <li>Langage dénigré par son "amateurisme"</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>2000 - 2005 : Ajax</h3>
+                <ul>
+                    <li>Invention par Microsoft de XMLHTTP</li>
+                    <li>Portage sur les autres navigateurs : XMLHttpRequest</li>
+                    <li>2004: Gmail</li>
+                    <li>2005: Google Maps</li>
+                    <li>2005 : Invention du terme AJAX par Jesse James Garret</li>
+                    <li>2006: Standardisation d'AJAX par le W3C</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>2005 - 2008 : Première explosion</h3>
+                <ul>
+                    <li>AJAX a permis à Javascript une adoption fulgurante</li>
+                    <li>Prototype, jQuery, Dojo et Mootools</li>
+                    <li>Développements orientés DOM</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>2009 - De nos jours : Seconde explosion</h3>
+                <ul>
+                    <li>Création de NodeJS</li>
+                    <li>HTML5</li>
+                    <li>ECMAScript 5</li>
+                    <li>Industrialisation</li>
+                    <li>Javascript everywhere</li>
+                </ul>
+            </section>
+        </section>
+
+        <section>
+
+            <section>
+                <h1>Paradigme</h1>
+            </section>
+
+            <section>
+                <h3>Paradigme</h3>
+                <ul>
+                    <li>Melting pot de plusieurs paradigmes</li>
+                    <li>Impératif et structuré</li>
+                    <li>Orienté objet (par prototype)</li>
+                    <li>Fonctionnel (first class functions)</li>
+                    <li>Typage dynamique et faible</li>
+                </ul>
+            </section>
+
+        </section>
+
+        <section>
+            <section>
+                <h1>Les types de données</h1>
+            </section>
+
+            <section>
+                <h3>Primitives</h3>
+                <ul>
+                    <li>Number</li>
+                    <li>String</li>
+                    <li>Boolean</li>
+                    <li>null</li>
+                    <li>undefined</li>
+                    <li>Les types primitifs sont <strong>immuables</strong></li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Autres types</h3>
+                <ul>
+                    <li>Tout ce qui n'est pas un type primitif est un objet</li>
+                    <li>Date</li>
+                    <li>RegExp</li>
+                    <li>....</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Cas particuliers</h3>
+                <ul>
+                    <li>Function est un type objet particulier</li>
+                    <li>Array</li>
+                </ul>
+            </section>
+
+        </section>
+
+        <section>
+            <section>
+                <h1>Les prototypes</h1>
+            </section>
+
+            <section>
+                <h3>Les prototypes</h3>
+                <ul>
+                    <li>Opposition au modèle de classe</li>
+                    <li>Définition au runtime au lieu de statique</li>
+                    <li>La composition des objets, leur liens et héritage peut donc être modifié à souhait</li>
+                    <li>Un prototype est un objet dont d'autres objets peuvent hériter de ses propriétés</li>
+                </ul>
+            </section>
+
+
+            <section>
+                <h3>Les prototypes</h3>
+                <ul>
+                    <li>Chaque objet en javascript a un prototype</li>
+                    <li>Initialisation implicite de "this" en fonction du contexte</li>
+                    <li>Tout appel à une propriété remonte la chaine de prototype jusqu'à trouver (ou pas) une valeur</li>
+                    <li>Les fonctions elles-même ont un prototype qui hérite d'object</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Exemples : prototype simple</h3>
+                <pre><code>
+function Person(firstName) {
+    this.firstName = firstName;
+}
+Person.prototype.getFirstName = function() {
+    return this.firstName();
+}
+//p a maintenant le prototype Person
+// et une propriété constructor affectée à Person()
+var p = new Person();
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Exemples : héritage</h3>
+                <pre><code>
+function Employee(isSenior) {
+    this.isSenior = isSenior;
+}
+Employee.prototype.isSenior() = function() {
+    return this.isSenior;
+}
+Employee.prototype = Person.prototype;
+Employee.prototype.constuctor = Employee;
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>L'opérateur instanceof</h3>
+                <ul>
+                    <li>Retourne vrai si un des prototypes de la chaine correspond</li>
+                    <pre><code>
+var A = function() {}
+var a = new A();
+console.log(a instanceof A); //true;
+console.log(a instanceof Object); //true;
+                    </code></pre>
+                </ul>
+            </section>
+
+            <section>
+                <h3>ECMAScript 5 : Object.create()</h3>
+                <pre><code>
+// definit aucun prototype
+var animal = Object.create(null);
+console.log(o.prototype); //undefined
+o.color = 'black';
+
+var cat = Object.create(animal);
+// Object {color: "black"}
+console.log(Object.getPrototypeOf(cat));
+cat.age = 12;
+//Object {age: 12, color: "black"}
+console.log(cat);
+
+var a = Object.create(Object.prototype) <=> var a = {}
+
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Ressources sur les prototypes</h3>
+                <ul>
+                    <li>
+                        <a href="http://dmitrysoshnikov.com/ecmascript/chapter-7-2-oop-ecmascript-implementation/#prototype">http://dmitrysoshnikov.com/ecmascript/chapter-7-2-oop-ecmascript-implementation/#prototype</a>
+                    </li>
+                    <li>
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects?redirectlocale=en-US&redirectslug=JavaScript%2FGuide%2FWorking_with_Objects">Doc Mozilla</a>
+                    </li>
+                    <li>
+                        <a href="http://javascriptweblog.wordpress.com/2010/06/07/understanding-javascript-prototypes/">Understanding javascript prototype</a>
+                    </li>
+                </ul>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h1>Le scope des variables</h1>
+            </section>
+
+            <section>
+                <h3>Scope</h3>
+                <ul>
+                    <li>Pas de scope "bloc" en javascript</li>
+                    <li>Le scope d'une variable est la fonction</li>
+                    <li>Une variable existe si elle est définie n'importe où dans la fonction</li>
+                    <li>Pour éviter les erreurs, la bonne pratique est de déclarer toutes les variables en début de fonction</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Déclaration et variable globale</h3>
+                <ul>
+                    <li>Toutes les variables doivent être déclarées avec le mot clef "var" sinon elles sont globales</li>
+                    <li>En mode normal, si this n'est pas défini il est égal à window (dans un contexte navigateur)</li>
+                    <li>Dans un navigateur toute variable définie à l'extérieur d'une fonction (même avec var) est globale</li>
+                    <li>Toujours utiliser le mode 'use strict'; qui force a la bonne déclaration entre autre chose</li>
+                </ul>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h1>Les 4 manières d'appeller une fonction</h1>
+            </section>
+            <section>
+                <h3>Simple sans contexte : appel de fonction</h3>
+                <p>
+                <pre><code>
+//wrapper de fonction, évite de déclarer des variables globales !
+// le scope est réduit à la fonction anonyme
+(function() {
+    'use strict';
+
+    function myFunction() {
+        // undefined, sans 'use strict' ce serait égal à window !
+        alert(this);
+    }
+
+    myFunction();
+
+})(); // exécute la fonction immédiatement
+                </code></pre>
+                </p>
+            </section>
+            <section>
+                <h3>Contexte d'un objet : appel de méthode</h3>
+                <pre><code>
+(function() {
+    'use strict';
+
+    var myObject = {
+        myMethod : function() {
+            // object - correspond à l'objet myObject
+            alert(this);
+        }
+    }
+
+    myObject.myMethod();
+
+})();
+                </code></pre>
+            </section>
+            <section>
+                <h3>Avec new : appel d'un constructeur</h3>
+                <pre><code>
+(function() {
+    'use strict';
+
+    // object - correspond à une instance de MyConstructor
+    // La majuscule en début est très importante!
+    // Seule une convention différencie l'appel
+    // de constructeur d'une fonction
+    var MyConstructor = function() {
+        alert(this);
+    }
+
+    var myObject = new MyConstructor();
+})();
+                </code></pre>
+            </section>
+            <section>
+                <h3>Attention : appel d'un constructeur</h3>
+                <pre><code>
+(function() {
+    'use strict';
+
+    // La majuscule permet d'identifier
+    // qu'il s'agit d'un constructeur
+    // et donc que l'on doit utiliser "new"
+    var MyConstructor = function() {
+        alert(this); // undefined !
+    }
+
+    // rien ne nous empêche d'appeller le constructeur
+    // en mode fonction
+    var myObject = MyConstructor();
+})();
+                </code></pre>
+            </section>
+            <section>
+                <h3>Avec call() ou apply() : contextualiser l'appel</h3>
+                <pre><code>
+(function() {
+    'use strict';
+
+    function myFunction(arg1, arg2) {
+        alert(this.myProp); // 1
+    }
+
+    var arg1, arg2;
+    // On choisit la valeur de this
+    // principe très utilisé dans des lib comme jQuery
+    myFunction.call({myProp: 1}, arg1, arg2);
+    myFunction.apply({myProp: 1}, [arg1, arg2]);
+
+})();
+                </code></pre>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h1>Les manières de créer des objets</h1>
+            </section>
+            <section>
+                 <h3>Les objets littéraux</h3>
+                <pre><code>
+(function() {
+    'use strict';
+
+    // déclaration directe
+    // pattern "singleton" gratuitement
+    var myObject = {
+        myProperty : 2,
+        myMethod: function() {
+            alert(this.myProperty); // 2
+        }
+    }
+
+    myObject.myMethod();
+
+})();
+                </code></pre>
+            </section>
+            <section>
+                <h3>En mode constructeur</h3>
+                <pre><code>
+(function() {
+    'use strict';
+    // La majuscule permet d'identifier
+    // qu'il s'agit d'un constructeur
+    // et donc que l'on doit utiliser "new"
+    var MyConstructor = function(value) {
+        this.myProperty = value;
+        alert(this);
+    }
+    MyConstructor.prototype.myMethod() {
+        alert(this.myProperty);
+    }
+    var myObject = new MyConstructor(1); myObject.myMethod(); // 1
+    myObject = new MyConstructor(1); myObject.myMethod(); // 2
+})();
+                </code></pre>
+            </section>
+            <section>
+                <h3>Avec des closures</h3>
+                <pre><code>
+(function() {
+    'use strict';
+    function myObject(myParam) {
+        var myPrivateProperty = myParam + 1;
+        function myPrivateFunction() {
+            alert(myPrivateProperty);
+        }
+        return {
+            myPublicProperty : 'abc',
+            myPublicMethod : function() {
+                return myPrivateFunction();
+            }
+        }
+    }
+    var instance = myObject(1);
+    instance.myPublicMethod(); //2
+})();
+                </code></pre>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h1>Les grands pièges</h1>
+            </section>
+
+            <section>
+                <h3>Variables globales</h3>
+                <ul>
+                    <li>Toujours utiliser le mode "use strict"</li>
+                    <li>Toujours utiliser "var"</li>
+                    <li>Attention au scope function</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>This et ses contextes</h3>
+                <ul>
+                    <li>Sans 'use strict' dans un navigateur : this = window = global</li>
+                    <li>avec use strict, sans "new" this = undefined</li>
+                    <li>avec call() ou apply() this = ce qu'on souhaite</li>
+                    <li>Figer le contexte : myFunction.bind(context)</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Exemple classique d'erreur avec this</h3>
+                <pre><code>
+function Person() {
+    jQuery("selecteur").click(function(e) {
+        this.myFunction(); //error myFunction is not defined
+    });
+}
+
+Person.prototype.myFunction = function() {
+    return 'myValue';
+}
+
+var a = new Person();
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Exemple classique d'erreur avec this</h3>
+                <pre><code>
+function Person() {
+    var self = this; // ou that = this
+    jQuery("selecteur").click(function(e) {
+        self.myFunction(); //myValue
+    });
+}
+
+Person.prototype.myFunction = function() {
+    return 'myValue';
+}
+
+var a = new Person();
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Eval() ca rime avec mal</h3>
+                <ul>
+                    <li>Eval() interprète du code à la volée</li>
+                    <li>Ne jamais utiliser sans une très bonne raison</li>
+                    <li>Nid à bug</li>
+                    <li>Peut rendre impossible la minification du code</li>
+                    <li>Impact sur les performances</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Eval() exemple</h3>
+                <pre><code>
+(function() {
+
+    'use strict';
+
+    // que va t-il se passer après minification?
+    var myFunction = function() {
+        var property;
+        eval('property = 3');
+        alert(property); // affiche 3
+    }
+
+    myFunction();
+})();
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Boucle for..in et prototype</h3>
+                <ul>
+                    <li>Boucle sur toutes les propriétés du prototype (et pas seulement celles de l'objet courant !)</li>
+                    <li>Nécessite un test avec hasOwnProperty() pour filtrer</li>
+                    <li>~10 à 20 fois moins performant qu'un for classique</li>
+                    <li>A utiliser avec parcimonie</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>for..in exemple</h3>
+                <pre><code>
+function() {
+
+    'use strict';
+
+    var arr = ['a','b','c'], indexes = [];
+    Array.prototype.myProperty = 'myValue';
+
+    for (var index in arr) {
+        indexes.push(index);
+    }
+
+    //["0", "1", "2", "myProperty", myProperty: "myValue"]
+    console.log(indexes);
+})();
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Closures et boucle</h3>
+<pre><code>
+function() {
+  'use strict';
+
+  var i;
+  for(i = 0; i < 10; i++) {
+    setTimeout(function() {
+    //qu est-ce qui va être affiché ?
+      console.log(i);
+    }, 1000);
+  }
+
+})();
+</code></pre>
+            </section>
+
+            <section>
+                <h3>Closures et boucle - solution</h3>
+<pre><code>
+function() {
+    'use strict';
+
+    var i;
+    for(i = 0; i < 10; i++) {
+        (function() { // nouveau scope
+            var j = i; //capture de la valeur
+            setTimeout(function() {
+                console.log(j);
+            }, 1000);
+        })();
+    }
+    // affiche de 0 à 9
+})();
+</code></pre>
+            </section>
+
+            <section>
+                <h3>Typage et opérateurs de comparaison</h3>
+                <ul>
+                    <li>== et != compare uniquement la valeur en effectuant des convertions de type implicites</li>
+                    <li>Toujours préférer === et !== qui compare également le type</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Typage et opérateurs de comparaison</h3>
+                <pre><code>
+(function() {
+
+    'use strict';
+
+    console.log(1 == true); //true
+    console.log(1 === true); //false
+
+    console.log(1 == '1'); // true
+    console.log(1 === '1'); // false
+})();
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>L'opérateur "delete"</h3>
+                <ul>
+                    <li>Sur la propriété d'un objet met la propriété à undefined - ok</li>
+                    <li>Idem sur un array (array est un objet particulier) - warning</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Exemple delete()</h3>
+                <pre><code>
+var a = ['a', 'b', 'c', 'd'];
+
+console.log(a); //["a", "b", "c", "d"]
+delete(a[2]);
+console.log(a); //!! ["a", "b", undefined, "d"]
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>la valeur NaN</h3>
+                <ul>
+                    <li>Ne jamais comparer à NaN</li>
+                    <li>Utiliser isNaN()</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Exemple NaN</h3>
+                <pre><code>
+var a = parseInt('A');
+console.log(a); // NaN
+console.log(a == NaN); // false
+console.log(a === NaN); //false
+console.log(NaN !== NaN); // true
+
+console.log(isNaN(a)); // true - Bonne réponse !
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Chercher des infos sur internet - WARNING</h3>
+                <ul>
+                    <li>Beacoup d'informations dépassées, de piètre qualité ou carrément mauvaise</li>
+                    <li>Si possible chercher dans la documentation de Mozilla</li>
+                    <li><a href="http://overapi.com/javascript/">cheat sheet</a> avec liens vers Mozilla</li>
+                    <li>Bon récapitulatif : <a href="http://bonsaiden.github.io/JavaScript-Garden">Javascript Garden</a></li>
+                    <li>Eviter w3school !</li>
+                </ul>
+            </section>
+
+        </section>
+
+    </div>
+
+
+    <div class="logo">
+        <a href="http://www.iocean.fr">
+            <img src="../images/logo2.png"/>
+        </a>
+    </div>
+</div>
+
+
+<script src="../components/reveal.js/lib/js/head.min.js"></script>
+<script src="../components/reveal.js/js/reveal.min.js" type="text/javascript"></script>
+<script src="../javascripts/config.js" type="text/javascript"></script>
+</body>
+</html>
