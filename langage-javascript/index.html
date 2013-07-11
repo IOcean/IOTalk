@@ -211,7 +211,7 @@ var p = new Person();
 function Employee(isSenior) {
     this.isSenior = isSenior;
 }
-Employee.prototype.isSenior() = function() {
+Employee.prototype.isSenior = function() {
     return this.isSenior;
 }
 Employee.prototype = Person.prototype;
@@ -237,8 +237,8 @@ console.log(a instanceof Object); //true;
                 <pre><code>
 // definit aucun prototype
 var animal = Object.create(null);
-console.log(o.prototype); //undefined
-o.color = 'black';
+console.log(animal.prototype); //undefined
+animal.color = 'black';
 
 var cat = Object.create(animal);
 // Object {color: "black"}
