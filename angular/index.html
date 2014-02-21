@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AngularJS</title>
+    <meta name="description" content="AngularJS">
+    <meta name="author" content="Vivian Pennel">
+    <meta charset="UTF-8">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link href="../components/reveal.js/css/reveal.min.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../components/reveal.js/css/theme/default.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../components/reveal.js/lib/css/zenburn.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../stylesheets/main.css" media="screen" rel="stylesheet" type="text/css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write( '<link rel="stylesheet" href="../components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../components/reveal.js/lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+    <section>
+        <h1>AngularJS</h1>
+
+        <h3>Qu'est-ce que c'est ?</h3>
+        <h4>Pourquoi ?</h4>
+        <p>
+            <small>Par
+                <a href="http://www.vivian-pennel.fr">Vivian Pennel</a> / <a href="http://twitter.com/vp3n">@vp3n</a><br>
+                Lead Developer chez <a href="http://www.iocean.fr">IOcean</a>
+            </small>
+        </p>
+    </section>
+
+    <section>
+        <section>
+            <h1>I. Un peu d'histoire</h1>
+        </section>
+        <section>
+            <h3>Côté navigateur</h3>
+            <p><a href="http://www.evolutionoftheweb.com/" target="_blank">L'évolution du web</a></p>
+            <ul>
+                <li>Page web statique : 1992-1996</li>
+                <li>Page web dynamique : 1996-Aujourd'hui</li>
+                <li>Single page application (SPA), 2005-Aujourd'hui, rendu possible grâce à AJAX</li>
+            </ul>
+
+        </section>
+        <section>
+            <h3>
+                <a href="http://farm3.static.flickr.com/2229/2092667573_5fea1e114f_o.jpg" target="_blank">Côté serveur</a>
+            </h3>
+            <ul>
+                <li>Côté Java/.NET les développeurs ont tentés de reproduire l'architecture client lourd</li>
+                <li>Problème : HTTP n'est pas adapté</li>
+                <li>Les langages de scripts se sont adaptés à HTTP (Ruby,Python, PHP)</li>
+                <li>Le point commun : tous calculent intégralement la page à afficher et servent du HTML</li>
+                <li>Le client ajoute juste quelques effets, validation, rechargement de certaines parties</li>
+            </ul>
+        </section>
+
+    </section>
+
+
+    <section>
+        <section>
+            <h1>II. La transition</h1>
+        </section>
+        <section>
+            <h3>Les écueils de l'architecture "serveur lourd“</h3>
+            <ul>
+                <li>Complexification de l'architecture serveur</li>
+                <li>Oblige à maintenir un minimum d'état côté serveur</li>
+                <li>Page de plus en plus lourde en transfert de données</li>
+                <li>Performance ressentie par l'utilisateur (rechargement complet)</li>
+                <li>Les développements javascript sont souvent "secondaires" et difficilements maintenables(jQuery)</li>
+            </ul>
+        </section>
+        <section>
+            <h3>Qu'est-ce qu'une SPA ?</h3>
+            <ul>
+                <li>Par définition il n'y a qu'une seule page web</li>
+                <li>Les changements de "page" (en fait d'URL) sont prise en charge côté client</li>
+                <li>Le contenu est changé dynamiquement sans rechargement de la page (ajax)</li>
+            </ul>
+        </section>
+        <section>
+            <h3>Facile !</h3>
+            <p>Avec jQuery je met un peu d'ajax, des events et boum je passe en SPA</p>
+            <img src="red_alert.jpeg" alt=""/>
+        </section>
+        <section>
+            <h3>Les problématiques</h3>
+            <ul>
+                <li>Déporter le rendu et sa logique sur le client signifie beaucoup de code client</li>
+                <li>Ce code doit être clair, lisible, testé et maintenable comme n'importe quel code</li>
+                <li>D'où l'apparition de framework Javascript</li>
+            </ul>
+        </section>
+        <section>
+            <h3>Architecture générale d'une SPA</h3>
+            <p><img src="http://singlepageappbook.com/assets/overview.png" alt=""></p>
+            <small><a href="http://singlepageappbook.com/goal.html">source</a></small>
+        </section>
+
+        <section>
+            <h3>Gestion des données</h3>
+            <ul>
+                <li>Récupèrées/envoyées via AJAX généralement via une API REST</li>
+                <li>Généralement en JSON, simple et léger</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Gestion de la navigation</h3>
+            <p>Comment fonctionne la navigation sur une seule page ?</p>
+            <ul>
+                <li>Changement d'URL via l'API pushState d'HTML5</li>
+                <li>Généralement on utilisera plutôt la convention "#" > URL client</li>
+                <li># compatible ancien navigateur et demande aucune coopération du serveur</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Gestion de la mémoire, des performances</h3>
+            <p>Une seule page signifie, comme sur un client desktop</p>
+            <ul>
+                <li>Que chaque état est maintenu pendant toute la durée d'utilisation par défaut</li>
+                <li>Qu'un traitement lourd peut bloquer l'interface</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Autres considérations</h3>
+            <ul>
+                <li>Comment synchroniser les données affichées avec celle du serveur de manière fiable ?</li>
+                <li>Comment valider les données côté client, est-ce suffisant ?</li>
+                <li>Quid de la gestion de droits, des formats d'affichage, de l'internationalisation etc..?</li>
+            </ul>
+
+            <p>Une réponse possible : AngularJS</p>
+        </section>
+    </section>
+
+    <section>
+        <section>
+            <h1>III. AngularJS</h1>
+        </section>
+
+        <section>
+            <h3>Kézako ?</h3>
+            <ul>
+                <li>Framework "complet" SPA développé par Google</li>
+                <li>Démarré en 2010, première version stable juin 2012</li>
+                <li>De plus en plus utilisé</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Principales fonctionnalités</h3>
+            <ul>
+                <li>Synchronisation des données à double sens</li>
+                <li>Injection de dépendance</li>
+                <li>Concepts dédiés pour gérer le cycle de vie des objets (comme les scopes)</li>
+                <li>Séparation de la manipulation du DOM de la logique de code (coucou jQuery)</li>
+                <li>Orientation composant grâce aux directives</li>
+                <li>Tout doit être testable</li>
+            </ul>
+        </section>
+
+    </section>
+
+    <section>
+        <section>
+            <h1>IV. Tour d'horizon des concepts</h1>
+        </section>
+        <section>
+            <h3>Controleur, scope et data binding</h3>
+            <img src="http://docs.angularjs.org/img/guide/concepts-databinding1.png" alt=""/>
+            <p><a href="http://angularjs.org/#add-some-control" target="_blank">Exemple</a></p>
+        </section>
+        <section>
+            <h3>Navigation</h3>
+            <ul>
+                <li>Permet de faciliter la gestion des "pages"</li>
+            </ul>
+            <p><a href="http://jsfiddle.net/HsQRN/3/" target="_blank">Exemple</a></p>
+        </section>
+        <section>
+            <h3>Filters</h3>
+            <ul>
+                <li>Permet d'appliquer des transformations sur une donnée</li>
+            </ul>
+            <p><a href="http://plnkr.co/edit/0xgNmw?p=preview" target="_blank">Exemple</a></p>
+        </section>
+        <section>
+            <h3>Services</h3>
+            <ul>
+                <li>Encapsuler la logique métier</li>
+                <li>Partage de données entre controleur</li>
+                <li>Mise en cache</li>
+                <li>Paramétrage de l'application via des providers</li>
+            </ul>
+        </section>
+        <section>
+            <h3>Directives</h3>
+            <ul>
+                <li>Composants ré-utilisable</li>
+            </ul>
+            <p><a href="http://angularjs.org/#create-components">Exemple</a></p>
+        </section>
+        <section>
+            <h3>Modules et injection de dépendance</h3>
+            <ul>
+                <li>Découplage des composants, sépare les responsabilités</li>
+                <li>Facilite l'écriture de tests</li>
+                <li>Facilite le remplacement d'un composant par un autre</li>
+            </ul>
+        </section>
+    </section>
+
+    <section>
+        <section>
+            <section>
+                <h1>V. Démo : profil github</h1>
+            </section>
+        </section>
+    </section>
+
+
+
+</div>
+
+    <div class="logo">
+        <a href="http://www.iocean.fr">
+            <img src="../images/logo2.png" />
+        </a>
+    </div>
+</div>
+
+
+<script src="../components/reveal.js/lib/js/head.min.js"></script>
+<script src="../components/reveal.js/js/reveal.min.js" type="text/javascript"></script>
+<script src="../javascripts/config.js" type="text/javascript"></script>
+</body>
+</html>
